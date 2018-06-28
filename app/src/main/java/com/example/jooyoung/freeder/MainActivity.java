@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         d_day = (ListView)findViewById(R.id.d_day_list);
         calender = (CalendarView)findViewById(R.id.Calendar);
         adapter = new ListAdapter();
-        My = new User("Asdf","sd","sf");
+        My = new User("Asdf","sd","sf","asd");
 
         d_day.setAdapter(adapter);
 

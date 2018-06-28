@@ -43,7 +43,7 @@ public class User implements Serializable {
     public void setEvent_deadline(String event_deadline) {
         this.event_deadline = event_deadline;
     }
-    
+
     public void setEvent_success(String event_success) {
         this.event_success = event_success;
     }
