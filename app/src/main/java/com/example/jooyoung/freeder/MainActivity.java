@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     CalendarView calender;
     ListAdapter adapter;
     String event_name;
+    User My;
     ArrayList<EventInformation> eventList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         d_day = (ListView)findViewById(R.id.d_day_list);
         calender = (CalendarView)findViewById(R.id.Calendar);
         adapter = new ListAdapter();
+        My = new User("Asdf","sd","sf");
 
         d_day.setAdapter(adapter);
 
@@ -67,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case 1:
+                _intent = new Intent(getApplicationContext(),Mypage.class);
+
+                _intent.putExtra("User",My);
+                startActivity(_intent);
+
                 return true;
             case 2:
                 return true;
