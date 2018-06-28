@@ -5,38 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/eventimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="93dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/eventname"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/eventimg"
-        android:layout_toEndOf="@+id/eventimg"
-        android:text="TextView" />
+        <ProgressBar
+            android:id="@+id/d_day_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="260dp"
+            android:layout_height="34dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="23dp"
+            android:max="10" />
 
-    <TextView
-        android:id="@+id/d_day"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="134dp"
-        android:layout_toEndOf="@+id/eventimg"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="18dp"
+            android:text="TextView"
+            android:fontFamily="@font/arial"/>
 
-    <CheckBox
-        android:id="@+id/select_day"
-        android:layout_width="51dp"
-        android:layout_height="43dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/eventimg"
-        android:layout_marginEnd="98dp" />
+        <TextView
+            android:id="@+id/event_d_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="120dp"
+            android:text="TextView" />
+
+    </RelativeLayout>
+
 </RelativeLayout>
