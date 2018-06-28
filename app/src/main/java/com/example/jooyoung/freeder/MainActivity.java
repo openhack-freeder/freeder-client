@@ -1,9 +1,12 @@
 package com.example.jooyoung.freeder;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -30,15 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.addItem(ContextCompat.getDrawable(this,R.drawable.ic_launcher_background),"asdf","Asdf");
         adapter.addItem(ContextCompat.getDrawable(this,R.drawable.ic_launcher_foreground),"Asf","sdf");
+    }
 
-
-
-
-
-
-
-
-
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.main_overflow, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
