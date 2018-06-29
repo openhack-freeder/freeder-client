@@ -37,7 +37,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="40dp"
             android:layout_marginEnd="72dp"
-            android:fontFamily="@font/arial"
+            android:fontFamily="@font/roboto_bold"
             android:textSize="14dp"
             android:textAlignment="center"
             android:text="TextView" />
@@ -51,7 +51,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
             android:text="TextView"
-            android:textColor="#CC0080" />
+            android:textColor="#CC0080"
+            android:fontFamily="@font/roboto_regular"/>
 
     </RelativeLayout>
 
@@ -61,22 +62,21 @@
         android:layout_height="56dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginTop="55dp"
         android:background="@drawable/white_back2"
         android:elevation="6dp">
 
         <CheckBox
             android:id="@+id/event_favorite2"
-            android:layout_width="43dp"
+            android:layout_width="48dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="6dp"
-            android:checked="false"
             android:button="@null"
+            android:checked="false"
             android:drawableLeft="@drawable/checkselector"
-            android:focusable="false"/>
+            android:focusable="false" />
 
     </RelativeLayout>
 

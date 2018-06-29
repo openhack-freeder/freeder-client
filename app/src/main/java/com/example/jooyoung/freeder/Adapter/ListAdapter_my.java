@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,37 +45,22 @@ public class ListAdapter_my extends BaseAdapter {
             convertView = inflater.inflate(R.layout.mypageitem, parent, false);
         }
 
-        TextView name = convertView.findViewById(R.id.mypage_name); // 이름
-        TextView date1 = convertView.findViewById(R.id.mypage_date1); // 신청날짜(yyyy/mm/dd -> m월 d일)
-        TextView date2 = convertView.findViewById(R.id.mypage_date2); // 기간(yyyy/mm/dd~yyyy/mm/dd)
-        TextView date3 = convertView.findViewById(R.id.mypage_date3); // 발표날짜(yyyy/mm/dd -> m월 d일)
 
-        EventInformation EventInfo = info.get(position);
+        TextView name = convertView.findViewById(R.id.event_name);
+        TextView d_day = convertView.findViewById(R.id.event_d_day);
+        ImageView dead_line = convertView.findViewById(R.id.dead_line);
 
-        name.setText(EventInfo.getEvent_name());
+        int temp = 0;
 
-        String getEv_day = EventInfo.getEvent_day();
-        String[] getEv_ymd = getEv_day.split("/");
-
-        try { // 신청 날짜를 텍스트로 받아서 정수형으로 변환 시도
-            int month = Integer.parseInt(getEv_ymd[1]);
-            int day = Integer.parseInt(getEv_ymd[2]);
-            String getEv_ymd2 = month + "월 " + day + "일";
-            date1.setText(getEv_ymd2);
-        } catch (Exception e) { // 안 되면 'mm월 dd일'로
-            try {
-                String getEv_ymd2 = getEv_ymd[1] + "월 " + getEv_ymd[2] + "일";
-                date1.setText(getEv_ymd2);
-            } catch (Exception e2) {
-                // 오류 처리
-            }
+        if(info.get(position).getDday() > 0){
+            dead_line.setImageResource(R.drawable.star_yes);
+            d_day.setText("D-" + String.valueOf(info.get(position).getDday()));
         }
-
-        date2.setText(EventInfo.getEvent_time()); // 임시
-        String[] dead_ymd = EventInfo.getEvent_time().split("/"); // 임시
-
-        date3.setText(EventInfo.getEvent_time()); // 임시
-
+        else{
+            dead_line.setImageResource(R.drawable.deadline);
+            d_day.setText("마감");
+        }
+        name.setText(info.get(position).getEvent_name());
 
 
         return convertView;

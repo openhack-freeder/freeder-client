@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/spinner_image"
-        android:layout_width="385dp"
-        android:layout_height="48dp"
-        tools:layout_editor_absoluteX="-10dp"
-        tools:layout_editor_absoluteY="188dp" />
+        android:layout_width="137dp"
+        android:layout_height="43dp"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="189dp" />
 
     <TextView
         android:id="@+id/categoryname"
@@ -20,6 +20,7 @@
         android:layout_weight="1"
         android:visibility="invisible"
         tools:layout_editor_absoluteX="254dp"
-        tools:layout_editor_absoluteY="199dp" />
+        tools:layout_editor_absoluteY="199dp"
+        android:fontFamily="@font/roboto_bold"/>
 
 </android.support.constraint.ConstraintLayout>

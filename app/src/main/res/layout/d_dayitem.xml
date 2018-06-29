@@ -7,9 +7,10 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+
     <RelativeLayout
         android:id="@+id/mainbox"
-        android:layout_width="310dp"
+        android:layout_width="341dp"
         android:layout_height="81dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -17,7 +18,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="6dp"
-        android:background="@drawable/white_back"
+        android:background="@drawable/test2"
         android:elevation="4dp"
         android:orientation="vertical">
 
@@ -35,11 +36,10 @@
 
         <View
             android:layout_width="2dp"
-            android:layout_height="match_parent"
+            android:layout_height="61dp"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="12dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="12dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="52dp"
             android:background="#ff44AA00" />
 
         <TextView
@@ -50,9 +50,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="34dp"
-            android:fontFamily="@font/arial"
-            android:textSize="12dp"
-            android:text="TextView" />
+            android:fontFamily="@font/roboto_bold"
+            android:text="TextView"
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/event_d_day"
@@ -62,34 +62,23 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/roboto_regular"
             android:text="TextView"
             android:textColor="#CC0080" />
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/circlebox"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+    <CheckBox
+        android:id="@+id/event_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/white_back2"
-        android:elevation="6dp">
-
-        <CheckBox
-            android:id="@+id/event_favorite"
-            android:layout_width="43dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="6dp"
-            android:checked="false"
-            android:button="@null"
-            android:drawableLeft="@drawable/checkselector"
-            android:focusable="false"/>
-
-    </RelativeLayout>
+        android:layout_marginEnd="21dp"
+        android:layout_marginTop="31dp"
+        android:button="@null"
+        android:checked="false"
+        android:drawableLeft="@drawable/checkselector"
+        android:focusable="false" />
 
 </RelativeLayout>

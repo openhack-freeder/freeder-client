@@ -1,24 +1,49 @@
 package com.example.jooyoung.freeder;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-// event 정보 출력 ( 내가 응모할 )
+// event 정보 출력
 public class EventActivity extends AppCompatActivity {
     Intent _intent;
     EventInformation current_event;
-    TextView event_name;
-    ImageView event_link;
+    TextView event_name,event_dday,event_category,event_time,event_applyperiod,event_link;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventinformation);
         _intent = getIntent();
         current_event = (EventInformation)_intent.getSerializableExtra("event");
+        event_name = (TextView)findViewById(R.id.event_name);
+        event_dday = (TextView)findViewById(R.id.event_day);
+        event_category = (TextView)findViewById(R.id.event_category);
+        event_applyperiod = (TextView)findViewById(R.id.event_applyperiod);
+        event_link = (TextView) findViewById(R.id.event_apply);
+
+
+
+        event_name.setText(current_event.getEvent_name());
+        event_dday.setText("D-" + String.valueOf(current_event.getDday()));
+        event_category.setText(current_event.getEvent_genre());
+        event_applyperiod.setText(current_event.getEvent_day());
+
+
+
+        event_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _intent = new Intent(Intent.ACTION_VIEW, Uri.parse(current_event.getURL()));
+                startActivity(_intent);
+
+            }
+        });
+
 
 
     }

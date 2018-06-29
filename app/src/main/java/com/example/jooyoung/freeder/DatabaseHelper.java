@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.Serializable;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATA_BASE_NAME ="restaurant";
     SQLiteDatabase db;
@@ -25,15 +27,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String db_event_location = "location";
     public static final String db_event_url = "url";
     public static final String db_event_category = "category";
-    public static final String db_event_favorite = "favorite";
     public static final String db_event_id = "id";
 
     String CREATE_C_TABLE = "CREATE TABLE " + CUSTOMER_TABLE + "("
             + db_event_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + db_event_title + " TEXT NOT NULL,"
             + db_event_date + " TEXT NOT NULL," + db_event_time + " TEXT NOT NULL,"
-            + db_event_location + " TEXT NOT NULL," + db_event_url + " TEXT NOT NULL," + db_event_category + " TEXT NOT NULL,"
-            + db_event_favorite + " TEXT NOT NULL"+ ");";
+            + db_event_location + " TEXT NOT NULL," + db_event_url + " TEXT NOT NULL," + db_event_category + " TEXT NOT NULL);";
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void insert(String title , String date , String time, String location , String url , String category){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("INSERT INTO user VALUES(null, '" + title + "', '" + date + "', '" + time + "', '" + location + "', '"
-                   + url + "', '" + category + "', 'true');");
+                   + url + "', '" + category + "');");
         db.close();
     }
 
@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while(cursor.moveToNext()){
             result += cursor.getString(1) + "@" + cursor.getString(2) + "@"
                     + cursor.getString(3) + "@" + cursor.getString(4) + "@"
-                    + cursor.getString(5) + "@" + cursor.getString(6) + "$";
+                    + cursor.getString(5) + "@" + cursor.getString(6) + "%";
         }
         cursor.close();
         return result;

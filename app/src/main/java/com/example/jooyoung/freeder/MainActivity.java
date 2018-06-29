@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         spin.add(new spinner_item(temp[5], R.drawable.etc));
 
         SpinnerAdapter spinner_adapter = new SpinnerAdapter(getApplicationContext(),spin);
-        dbHelper = new DatabaseHelper(getApplicationContext(), "User6.db", null, 1);
+        dbHelper = new DatabaseHelper(getApplicationContext(), "User10.db", null, 1);
 
 
         current_day = getDate();
@@ -339,7 +339,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.event_favorite:
-                        //My = new User();
                         String name = (String) v.getTag();
                         for (int i = 0; i < eventList.size(); i++) {
                             if (eventList.get(i).getEvent_name().equals(name)) {
@@ -352,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                                                 My = new User();
                                             } else {
                                                 My = new User();
-                                                String sp1[] = dbHelper.select().split("$");
+                                                String sp1[] = dbHelper.select().split("%");
                                                 for (int m = 0; m < sp1.length; m++) {
                                                     String sp2[] = sp1[m].split("@");
                                                     My.setMyevent(new EventInformation(sp2[0], sp2[1], sp2[2], sp2[3], sp2[4], sp2[5]));
@@ -363,11 +362,12 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
                                 } else {
+                                    My = new User();
                                     eventList.get(i).setFavorite(true);
                                     dbHelper.insert(eventList.get(i).getEvent_name(), eventList.get(i).getEvent_day(), eventList.get(i).getEvent_time(),
                                             eventList.get(i).getEvent_location(), eventList.get(i).getURL(), eventList.get(i).getEvent_genre());
 
-                                    String sp1[] = dbHelper.select().split("$");
+                                    String sp1[] = dbHelper.select().split("%");
                                     Log.i("디비 크기", String.valueOf(sp1.length));
                                     for (int m = 0; m < sp1.length; m++) {
                                         String sp2[] = sp1[m].split("@");
@@ -399,6 +399,7 @@ public class MainActivity extends AppCompatActivity {
 
                 _intent.putExtra("User", My);
                 _intent.putExtra("Event", eventList);
+                _intent.putExtra("current_day",current_day);
                 startActivity(_intent);
 
                 return true;
