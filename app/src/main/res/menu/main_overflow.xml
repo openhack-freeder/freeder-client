@@ -3,33 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/logo"
-        android:title="A"
-        app:showAsAction="always" />
-    <item
-        android:icon="@drawable/white"
-        android:title="A"
-        app:showAsAction="always" />
-    <item
-        android:icon="@drawable/white"
-        android:title="A"
-        app:showAsAction="always" />
-    <item
-        android:icon="@drawable/white"
-        android:title="A"
-        app:showAsAction="always" />
-    <item
-        android:icon="@drawable/white"
+        android:id="@+id/overflow01"
+        android:icon="@drawable/only"
         android:title="A"
         app:showAsAction="always" />
     <item
         android:id="@+id/overflow02"
         android:icon="@drawable/outline_calendar_today_24px"
-        android:title="A"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/overflow01"
-        android:icon="@drawable/only"
         android:title="A"
         app:showAsAction="always" />
 

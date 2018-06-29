@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/mainbox2"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="75dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="6dp"
@@ -27,20 +27,17 @@
             android:layout_height="70dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/circle"/>
+            android:src="@drawable/circle" />
 
         <TextView
             android:id="@+id/event_name2"
             android:layout_width="204dp"
-            android:layout_height="52dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="40dp"
-            android:layout_marginEnd="72dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
             android:fontFamily="@font/roboto_bold"
-            android:textSize="14dp"
+            android:text="TextView"
             android:textAlignment="center"
-            android:text="TextView" />
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/event_d_day2"
@@ -50,9 +47,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/roboto_regular"
             android:text="TextView"
-            android:textColor="#CC0080"
-            android:fontFamily="@font/roboto_regular"/>
+            android:textColor="#CC0080" />
 
     </RelativeLayout>
 
@@ -60,10 +57,8 @@
         android:id="@+id/circlebox2"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="17dp"
-        android:layout_marginTop="55dp"
+        android:layout_alignBottom="@+id/mainbox2"
+        android:layout_alignEnd="@+id/mainbox2"
         android:background="@drawable/white_back2"
         android:elevation="6dp">
 

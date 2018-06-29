@@ -79,6 +79,25 @@ public class EventListActivity extends AppCompatActivity {
             }
         }
         events.setAdapter(adapter);
+
+
+        events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                _intent = new Intent(getApplicationContext(), EventActivity.class);
+                EventInformation temp = new EventInformation();
+                String name;
+                name = adapter.getItem(position);
+                for (int i = 0; i < eventList.size(); i++) {
+                    if (name.equals(eventList.get(i).getEvent_name())) {
+                        temp = eventList.get(i);
+                    }
+                }
+                _intent.putExtra("event", temp);
+                startActivity(_intent);
+            }
+        });
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         spin.add(new spinner_item(temp[5], R.drawable.etc));
 
         SpinnerAdapter spinner_adapter = new SpinnerAdapter(getApplicationContext(),spin);
-        dbHelper = new DatabaseHelper(getApplicationContext(), "User10.db", null, 1);
+        dbHelper = new DatabaseHelper(getApplicationContext(), "User12.db", null, 1);
 
 
         current_day = getDate();
