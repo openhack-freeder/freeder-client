@@ -1,8 +1,11 @@
 package com.example.jooyoung.freeder;
 
-import java.io.Serializable;
+import android.support.annotation.NonNull;
 
-public class EventInformation implements Serializable {
+import java.io.Serializable;
+import java.util.Comparator;
+
+public class EventInformation implements Serializable,Comparable<EventInformation> {
     private String event_name;
     private String event_time; // 날짜
     private String event_day; // 응모기간
@@ -10,6 +13,7 @@ public class EventInformation implements Serializable {
     private String URL;
     private String event_genre;
     private boolean favorite;
+    private Integer dday;
 
     public EventInformation(){
         favorite = false;
@@ -53,6 +57,10 @@ public class EventInformation implements Serializable {
         return favorite;
     }
 
+    public Integer getDday() {
+        return dday;
+    }
+
     public void setEvent_day(String event_day) {
         this.event_day = event_day;
     }
@@ -79,5 +87,20 @@ public class EventInformation implements Serializable {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public void setDday(Integer dday) {
+        this.dday = dday;
+    }
+
+    @Override
+    public int compareTo(@NonNull EventInformation o) {
+        if(dday > o.getDday()){
+            return 1;
+        }
+        else if(dday < o.getDday()){
+            return -1;
+        }
+        return 0;
     }
 }

@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/spinner_image"
+        android:layout_width="385dp"
+        android:layout_height="48dp"
+        tools:layout_editor_absoluteX="-10dp"
+        tools:layout_editor_absoluteY="188dp" />
+
     <TextView
         android:id="@+id/categoryname"
-        android:layout_width="341dp"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="35dp" />
+        android:layout_width="53dp"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="199dp" />
+
 </android.support.constraint.ConstraintLayout>

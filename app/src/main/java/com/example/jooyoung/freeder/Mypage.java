@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 
 public class Mypage extends AppCompatActivity {
     Intent _intent;
-    User My;
+    User Mylist = new User();
     ListView my_events;
     ListAdapter_my adapter;
-    ArrayList<EventInformation> eventList = new ArrayList<>();
+    Button all_erase,selete_erase;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,22 +31,16 @@ public class Mypage extends AppCompatActivity {
 
         _intent = getIntent();
 
-        My = (User) _intent.getSerializableExtra("User");
+        Mylist = (User)_intent.getSerializableExtra("User");
 
         // 리스트뷰에 데이터 불러오기
         my_events = (ListView)findViewById(R.id.my_list);
         adapter = new ListAdapter_my();
         my_events.setAdapter(adapter);
-        Log.i("마이 크기",String.valueOf(My.getMyevent().size()));
-        for(int i=0;i<My.getMyevent().size();i++){
-            adapter.addItem(My.getMyevent().get(i));
+        Log.i("마이 크기",String.valueOf(Mylist.getMyevent().size()));
+        for(int i=0;i<Mylist.getMyevent().size();i++){
+            adapter.addItem(Mylist.getMyevent().get(i));
         }
 
-        my_events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
     }
 }

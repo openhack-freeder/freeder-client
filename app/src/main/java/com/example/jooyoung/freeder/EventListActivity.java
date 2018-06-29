@@ -32,6 +32,7 @@ public class EventListActivity extends AppCompatActivity {
         setContentView(R.layout.eventlist);
         _intent = getIntent();
         eventList = (ArrayList<EventInformation>)_intent.getSerializableExtra("Event");
+        My = (User)_intent.getSerializableExtra("User");
 
 
         adapter = new ListAdapter2();

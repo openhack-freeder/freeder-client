@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jooyoung.freeder.Adapter.ListAdapter;
+import com.example.jooyoung.freeder.Adapter.SpinnerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +29,8 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -64,8 +67,17 @@ public class MainActivity extends AppCompatActivity {
         List<String> _spinner_item = new ArrayList<>();
         String[] temp = {"전체", "영화", "축제,행사", "무용,발레", "뮤지컬,연극", "기타행사"};
         _spinner_item.addAll(Arrays.asList(temp));
-        ArrayAdapter spinner_adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, _spinner_item);
-        dbHelper = new DatabaseHelper(getApplicationContext(), "User3.db", null, 1);
+        ArrayList<spinner_item> spin = new ArrayList<spinner_item>();
+
+        spin.add(new spinner_item(temp[0], R.drawable.all));
+        spin.add(new spinner_item(temp[1], R.drawable.movie));
+        spin.add(new spinner_item(temp[2], R.drawable.festival));
+        spin.add(new spinner_item(temp[3], R.drawable.dance));
+        spin.add(new spinner_item(temp[4], R.drawable.musical));
+        spin.add(new spinner_item(temp[5], R.drawable.etc));
+
+        SpinnerAdapter spinner_adapter = new SpinnerAdapter(getApplicationContext(),spin);
+        dbHelper = new DatabaseHelper(getApplicationContext(), "User6.db", null, 1);
 
 
         current_day = getDate();
@@ -115,17 +127,31 @@ public class MainActivity extends AppCompatActivity {
                 _temp.setEvent_location(where);
                 _temp.setEvent_genre(category);
                 _temp.setURL(url);
+
                 eventList.add(_temp);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        set_dday();
+        Collections.sort(eventList, new Comparator<EventInformation>() {
+            @Override
+            public int compare(EventInformation o1, EventInformation o2) {
+                if (o1.getDday() > o2.getDday()) {
+                    return 1;
+                } else if (o1.getDday() < o2.getDday()) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
         select_list();
 
-        for(int i=0;i<My.getMyevent().size();i++){
-            for(int j=0;j<eventList.size();j++) {
-                if (My.getMyevent().get(i).getEvent_name().equals(eventList.get(j).getEvent_name())){
+        for (int i = 0; i < My.getMyevent().size(); i++) {
+            for (int j = 0; j < eventList.size(); j++) {
+                if (My.getMyevent().get(i).getEvent_name().equals(eventList.get(j).getEvent_name())) {
                     eventList.get(j).setFavorite(true);
                 }
             }
@@ -319,27 +345,23 @@ public class MainActivity extends AppCompatActivity {
                             if (eventList.get(i).getEvent_name().equals(name)) {
                                 if (eventList.get(i).isFavorite()) {
                                     eventList.get(i).setFavorite(false);
-                                    for(int j=0;j<My.getMyevent().size();j++) {
+                                    for (int j = 0; j < My.getMyevent().size(); j++) {
                                         if (My.getMyevent().get(j).getEvent_name().equals(name)) {
-                                            if (My.getMyevent().get(j).isFavorite()) {
-                                                dbHelper.delete(My.getMyevent().get(j).getEvent_name());
-                                                if (dbHelper.select().equals("")) {
-                                                    My = new User();
-                                                } else {
-                                                    My = new User();
-                                                    String sp1[] = dbHelper.select().split("$");
-                                                    for (int m = 0; m < sp1.length; m++) {
-                                                        String sp2[] = sp1[m].split("@");
-                                                        My.setMyevent(new EventInformation(sp2[0], sp2[1], sp2[2], sp2[3], sp2[4], sp2[5]));
-
-                                                    }
-                                                    break;
+                                            dbHelper.delete(My.getMyevent().get(j).getEvent_name());
+                                            if (dbHelper.select().equals("")) {
+                                                My = new User();
+                                            } else {
+                                                My = new User();
+                                                String sp1[] = dbHelper.select().split("$");
+                                                for (int m = 0; m < sp1.length; m++) {
+                                                    String sp2[] = sp1[m].split("@");
+                                                    My.setMyevent(new EventInformation(sp2[0], sp2[1], sp2[2], sp2[3], sp2[4], sp2[5]));
                                                 }
+                                                break;
                                             }
+
                                         }
                                     }
-
-                                    break;
                                 } else {
                                     eventList.get(i).setFavorite(true);
                                     dbHelper.insert(eventList.get(i).getEvent_name(), eventList.get(i).getEvent_day(), eventList.get(i).getEvent_time(),
@@ -376,12 +398,14 @@ public class MainActivity extends AppCompatActivity {
                 _intent = new Intent(getApplicationContext(), Mypage.class);
 
                 _intent.putExtra("User", My);
+                _intent.putExtra("Event", eventList);
                 startActivity(_intent);
 
                 return true;
             case R.id.overflow04:
                 _intent = new Intent(getApplicationContext(), EventListActivity.class);
                 _intent.putExtra("Event", eventList);
+                _intent.putExtra("User", My);
 
                 startActivity(_intent);
                 return true;
@@ -433,5 +457,114 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-}
 
+    public void set_dday() {
+        for (int i = 0; i < eventList.size(); i++) {
+            int timetemp, check, dday;
+            dday = 100;
+            timetemp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19)) - (Integer.parseInt(select_day.substring(8))));
+            check = Integer.parseInt(select_day.substring(5, 7));
+            if (eventList.get(i).getEvent_day().substring(16, 18).equals(select_day.substring(5, 7))) {
+                dday = timetemp;
+            } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 1))) {
+                if (check % 2 == 0) {
+                    if (check == 2) {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 28 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    } else {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 30 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    }
+                } else {
+                    int ftemp = Integer.parseInt(select_day.substring(8));
+                    int sftemp = 31 - ftemp;
+                    dday = (timetemp + ftemp) + sftemp;
+                }
+            } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 2))) {
+                if (check % 2 == 0) {
+                    if (check == 2) {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 28 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    } else {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 30 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    }
+                } else {
+                    int ftemp = Integer.parseInt(select_day.substring(8));
+                    int sftemp = 31 - ftemp;
+                    dday = (timetemp + ftemp) + sftemp;
+                }
+            } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 3))) {
+                if (check % 2 == 0) {
+                    if (check == 2) {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 28 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    } else {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 30 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    }
+                } else {
+                    int ftemp = Integer.parseInt(select_day.substring(8));
+                    int sftemp = 31 - ftemp;
+                    dday = (timetemp + ftemp) + sftemp;
+                }
+            } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 4))) {
+                if (check % 2 == 0) {
+                    if (check == 2) {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 28 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    } else {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 30 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    }
+                } else {
+                    int ftemp = Integer.parseInt(select_day.substring(8));
+                    int sftemp = 31 - ftemp;
+                    dday = (timetemp + ftemp) + sftemp;
+                }
+            } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 5))) {
+                if (check % 2 == 0) {
+                    if (check == 2) {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 28 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    } else {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 30 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    }
+                } else {
+                    int ftemp = Integer.parseInt(select_day.substring(8));
+                    int sftemp = 31 - ftemp;
+                    dday = (timetemp + ftemp) + sftemp;
+                }
+            } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 6))) {
+                if (check % 2 == 0) {
+                    if (check == 2) {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 28 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    } else {
+                        int ftemp = Integer.parseInt(select_day.substring(8));
+                        int sftemp = 30 - ftemp;
+                        dday = (timetemp + ftemp) + sftemp;
+                    }
+                } else {
+                    int ftemp = Integer.parseInt(select_day.substring(8));
+                    int sftemp = 31 - ftemp;
+                    dday = (timetemp + ftemp) + sftemp;
+                }
+            }
+            eventList.get(i).setDday(dday);
+        }
+
+    }
+}
