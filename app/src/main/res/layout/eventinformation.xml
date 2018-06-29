@@ -4,7 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F0F0F0">
+
+    <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@drawable/eventinfo"/>
 
     <TextView
         android:id="@+id/event_name"
@@ -12,8 +18,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+<<<<<<< HEAD
         android:layout_marginStart="31dp"
         android:layout_marginTop="99dp"
+=======
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="200dp"
+        android:textSize="16dp"
+        android:textColor="#000000"
+>>>>>>> 이벤트 정보 액티비티의 디자인 구성
         android:text="TextView" />
 
     <TextView
@@ -21,9 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="-73dp"
-        android:layout_marginTop="230dp"
+        android:layout_marginEnd="-90dp"
+        android:layout_marginTop="128dp"
         android:layout_toStartOf="@+id/event_time"
+        android:textColor="#CC0066"
         android:text="TextView" />
 
     <TextView
@@ -32,9 +46,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+<<<<<<< HEAD
         android:layout_marginStart="144dp"
         android:layout_marginTop="129dp"
         android:text="TextView" />
+=======
+        android:layout_marginStart="73dp"
+        android:layout_marginTop="192dp"
+        android:text="" />
+>>>>>>> 이벤트 정보 액티비티의 디자인 구성
 
     <TextView
         android:id="@+id/event_location"
@@ -44,7 +64,53 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="150dp"
         android:layout_marginStart="51dp"
-        android:text="TextView" />
+        android:text="" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="200dp"
+        android:layout_marginStart="165dp"
+        android:text="카테고리" />
+
+    <TextView
+        android:id="@+id/event_category"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="160dp"
+        android:layout_marginStart="100dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:background="#555555"
+        android:textColor="#FFFFFF"
+        android:text="카테고리" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="120dp"
+        android:layout_marginStart="165dp"
+        android:text="신청기간" />
+
+    <TextView
+        android:id="@+id/event_applyperiod"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginStart="100dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:background="#555555"
+        android:textColor="#FFFFFF"
+        android:text="신청기간" />
 
     <ImageView
         android:id="@+id/event_link"
@@ -53,5 +119,43 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         app:srcCompat="@android:drawable/alert_light_frame" />
+
+    <TextView
+        android:id="@+id/event_apply"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:text="신청하러 가기"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:background="#E95C8A"
+        android:onClick="to_apply"/>
+
+    <RelativeLayout
+        android:id="@+id/circlebox"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/white_back2"
+        android:elevation="6dp">
+
+        <CheckBox
+            android:id="@+id/event_favorite"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="6dp"
+            android:checked="false"
+            android:button="@null"
+            android:drawableLeft="@drawable/checkselector"
+            android:focusable="false"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
