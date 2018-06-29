@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class EventInformation implements Serializable {
     private String event_name;
-    private String event_time;
-    private String event_day;
+    private String event_time; // 응모기간
+    private String event_day; // 날짜
     private String event_location;
     private String URL;
     private String event_genre;
