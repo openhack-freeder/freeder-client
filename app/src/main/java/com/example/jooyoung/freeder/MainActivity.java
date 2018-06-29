@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         String[] temp = {"전체", "영화", "축제,행사", "무용,발레", "뮤지컬,연극", "기타행사"};
         _spinner_item.addAll(Arrays.asList(temp));
         ArrayAdapter spinner_adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, _spinner_item);
-        dbHelper = new DatabaseHelper(getApplicationContext(), "User2.db", null, 1);
+        dbHelper = new DatabaseHelper(getApplicationContext(), "User3.db", null, 1);
 
 
         current_day = getDate();
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("디비 : ", "비었음");
 
         } else {
-            String sp1[] = dbHelper.select().split("&");
+            String sp1[] = dbHelper.select().split("$");
             for (int i = 0; i < sp1.length; i++) {
                 String sp2[] = sp1[i].split("@");
                 My.setMyevent(new EventInformation(sp2[0], sp2[1], sp2[2], sp2[3], sp2[4], sp2[5]));
@@ -313,21 +313,40 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.event_favorite:
+                        //My = new User();
                         String name = (String) v.getTag();
                         for (int i = 0; i < eventList.size(); i++) {
                             if (eventList.get(i).getEvent_name().equals(name)) {
                                 if (eventList.get(i).isFavorite()) {
                                     eventList.get(i).setFavorite(false);
+                                    for(int j=0;j<My.getMyevent().size();j++) {
+                                        if (My.getMyevent().get(j).getEvent_name().equals(name)) {
+                                            if (My.getMyevent().get(j).isFavorite()) {
+                                                dbHelper.delete(My.getMyevent().get(j).getEvent_name());
+                                                if (dbHelper.select().equals("")) {
+                                                    My = new User();
+                                                } else {
+                                                    My = new User();
+                                                    String sp1[] = dbHelper.select().split("$");
+                                                    for (int m = 0; m < sp1.length; m++) {
+                                                        String sp2[] = sp1[m].split("@");
+                                                        My.setMyevent(new EventInformation(sp2[0], sp2[1], sp2[2], sp2[3], sp2[4], sp2[5]));
+
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
 
                                     break;
                                 } else {
                                     eventList.get(i).setFavorite(true);
                                     dbHelper.insert(eventList.get(i).getEvent_name(), eventList.get(i).getEvent_day(), eventList.get(i).getEvent_time(),
                                             eventList.get(i).getEvent_location(), eventList.get(i).getURL(), eventList.get(i).getEvent_genre());
-                                    My = new User();
-                                    String sp1[] = dbHelper.select().split("&");
-                                    Log.i("디비 크기", String.valueOf(sp1.length));
 
+                                    String sp1[] = dbHelper.select().split("$");
+                                    Log.i("디비 크기", String.valueOf(sp1.length));
                                     for (int m = 0; m < sp1.length; m++) {
                                         String sp2[] = sp1[m].split("@");
                                         My.setMyevent(new EventInformation(sp2[0], sp2[1], sp2[2], sp2[3], sp2[4], sp2[5]));
@@ -336,29 +355,8 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 }
                             }
-
-
-                        }
-                        for (int j = 0; j < My.getMyevent().size(); j++) {
-                            if (My.getMyevent().get(j).getEvent_name().equals(name)) {
-                                if (My.getMyevent().get(j).isFavorite()) {
-                                    dbHelper.delete(My.getMyevent().get(j).getEvent_name());
-                                    if (dbHelper.select().equals("")) {
-                                        My = new User();
-                                    } else {
-                                        My = new User();
-                                        String sp1[] = dbHelper.select().split("&");
-                                        for (int m = 0; m < sp1.length; m++) {
-                                            String sp2[] = sp1[m].split("@");
-                                            My.setMyevent(new EventInformation(sp2[0], sp2[1], sp2[2], sp2[3], sp2[4], sp2[5]));
-
-                                        }
-                                    }
-                                }
-                            }
                         }
                 }
-
             }
         };
     }
