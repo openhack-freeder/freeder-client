@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.jooyoung.freeder.Adapter.ListAdapter;
+import com.example.jooyoung.freeder.Adapter.ListAdapter2;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class EventListActivity extends AppCompatActivity {
     Intent _intent;
     User My;
     ListView events;
-    ListAdapter adapter;
+    ListAdapter2 adapter;
     Date mDate;
     long mNow;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.MM.dd");
@@ -34,7 +34,7 @@ public class EventListActivity extends AppCompatActivity {
         eventList = (ArrayList<EventInformation>)_intent.getSerializableExtra("Event");
 
 
-        adapter = new ListAdapter();
+        adapter = new ListAdapter2();
         events = (ListView)findViewById(R.id.event_list);
 
         for(int i=0;i<eventList.size();i++){
