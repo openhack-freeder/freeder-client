@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-// event 정보 출력
+// event 정보 출력 ( 내가 응모할 )
 public class EventActivity extends AppCompatActivity {
     Intent _intent;
     EventInformation current_event;
@@ -19,7 +19,6 @@ public class EventActivity extends AppCompatActivity {
         setContentView(R.layout.eventinformation);
         _intent = getIntent();
         current_event = (EventInformation)_intent.getSerializableExtra("event");
-        
 
 
     }
