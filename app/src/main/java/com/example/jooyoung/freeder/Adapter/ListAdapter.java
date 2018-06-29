@@ -59,7 +59,7 @@ public class ListAdapter extends BaseAdapter{
         return convertView;
     }
 
-    public void addItem(Drawable img, String name,String dday){
+    public void addItem(String name,String dday){
         ListItem item = new ListItem();
         item.setTitle(name);
         item.setDday(dday);

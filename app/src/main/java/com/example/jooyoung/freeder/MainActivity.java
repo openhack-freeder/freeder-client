@@ -36,12 +36,14 @@ public class MainActivity extends AppCompatActivity {
         d_day = (ListView)findViewById(R.id.d_day_list);
         calender = (CalendarView)findViewById(R.id.Calendar);
         adapter = new ListAdapter();
-        My = new User("Asdf","sd","sf","asd");
+        My = new User(new EventInformation("asdf","asdf","asdf","asdf","asdf"));
+        // 데이터에 저장된 내 정보 ... 에 있는 객체 (반복 돌릴꺼)
 
         d_day.setAdapter(adapter);
 
-        adapter.addItem(ContextCompat.getDrawable(this,R.drawable.ic_launcher_background),"asdf","3");
-        adapter.addItem(ContextCompat.getDrawable(this,R.drawable.ic_launcher_foreground),"Asf","5");
+        adapter.addItem("asdf","3");
+        adapter.addItem("Asf","5");
+        // 이 부분은 반복문으로 데이터 받아올때 넣자
 
         d_day.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
