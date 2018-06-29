@@ -280,19 +280,17 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
                             } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 1))) {
-                                if (check % 2 == 0) {
-                                    if (check == 2) {
-                                        int ftemp = Integer.parseInt(select_day.substring(8));
-                                        int sftemp = 28 - ftemp;
-                                        if ((temp + ftemp) + sftemp < 10) {
-                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
-                                        }
-                                    } else {
-                                        int ftemp = Integer.parseInt(select_day.substring(8));
-                                        int sftemp = 30 - ftemp;
-                                        if ((temp + ftemp) + sftemp < 10) {
-                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
-                                        }
+                                if (check == 2) {
+                                    int ftemp = Integer.parseInt(select_day.substring(8));
+                                    int sftemp = 28 - ftemp;
+                                    if ((temp + ftemp) + sftemp < 10) {
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                    }
+                                } else if(check == 4 || check == 6 || check == 9 || check == 11){
+                                    int ftemp = Integer.parseInt(select_day.substring(8));
+                                    int sftemp = 30 - ftemp;
+                                    if ((temp + ftemp) + sftemp < 10) {
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
                                     }
                                 } else {
                                     int ftemp = Integer.parseInt(select_day.substring(8));
