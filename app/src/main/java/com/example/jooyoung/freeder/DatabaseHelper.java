@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     Cursor cursor;
 
     //table name
-    public static final String CUSTOMER_TABLE = "User";
+    public static final String CUSTOMER_TABLE = "user";
 
     //column name of cust_tab
     public static final String db_event_title ="title";
@@ -42,29 +42,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_C_TABLE);
+        Log.i("create table","성공");
 
     }
 
     public void insert(String title , String date , String time, String location , String url , String category){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("INSERT INTO User VALUES(null, '" + title + "', '" + date + "', '" + time + "', '" + location + "', '"
+        db.execSQL("INSERT INTO user VALUES(null, '" + title + "', '" + date + "', '" + time + "', '" + location + "', '"
                    + url + "', '" + category + "', 'true');");
+        db.close();
     }
 
     public void delete(String title){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM User WHERE title= '" + title + "';");
+        db.execSQL("DELETE FROM user WHERE title = '" + title + "';");
+        db.close();
     }
 
     public String select(){
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String result = "";
-        cursor = db.rawQuery("SELECT * FROM User ",null);
+        cursor = db.rawQuery("SELECT * FROM user ",null);
         while(cursor.moveToNext()){
-            result += cursor.getString(0) + "@" + cursor.getString(1) + "@"
-                    + cursor.getString(2) + "@" + cursor.getString(3) + "@"
-                    + cursor.getString(4) + "@" + cursor.getString(5) + "&";
+            result += cursor.getString(1) + "@" + cursor.getString(2) + "@"
+                    + cursor.getString(3) + "@" + cursor.getString(4) + "@"
+                    + cursor.getString(5) + "@" + cursor.getString(6) + "&";
         }
+        cursor.close();
         return result;
     }
 

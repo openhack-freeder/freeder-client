@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -35,6 +36,7 @@ public class Mypage extends AppCompatActivity {
         my_events = (ListView)findViewById(R.id.my_list);
         adapter = new ListAdapter_my();
         my_events.setAdapter(adapter);
+        Log.i("마이 크기",String.valueOf(My.getMyevent().size()));
         for(int i=0;i<My.getMyevent().size();i++){
             adapter.addItem(My.getMyevent().get(i));
         }
