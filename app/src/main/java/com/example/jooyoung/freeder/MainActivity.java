@@ -70,14 +70,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case 1:
+            case R.id.overflow1:
                 _intent = new Intent(getApplicationContext(),Mypage.class);
 
                 _intent.putExtra("User",My);
                 startActivity(_intent);
 
                 return true;
-            case 2:
+            case R.id.overflow2:
                 return true;
         }
         return false;
