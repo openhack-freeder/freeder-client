@@ -48,7 +48,7 @@ public class EventListActivity extends AppCompatActivity {
                     if(temp < 0)
                     {}
                     else{
-                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp));
+                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp),eventList.get(i).isFavorite());
                     }
 
                 }
@@ -59,14 +59,14 @@ public class EventListActivity extends AppCompatActivity {
                         int ftemp = Integer.parseInt(current_day.substring(8));
                         int sftemp = 28 - ftemp;
                         if((temp + ftemp)+sftemp < 10){
-                            adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                            adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                         }
                     }
                     else{
                         int ftemp = Integer.parseInt(current_day.substring(8));
                         int sftemp = 30 - ftemp;
                         if((temp + ftemp)+sftemp < 10){
-                            adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                            adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                         }
                     }
                 }
@@ -74,7 +74,7 @@ public class EventListActivity extends AppCompatActivity {
                     int ftemp = Integer.parseInt(current_day.substring(8));
                     int sftemp = 31 - ftemp;
                     if((temp + ftemp)+sftemp < 10){
-                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                     }
                 }
             }

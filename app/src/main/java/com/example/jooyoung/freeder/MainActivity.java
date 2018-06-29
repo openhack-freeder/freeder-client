@@ -1,6 +1,7 @@
 package com.example.jooyoung.freeder;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jooyoung.freeder.Adapter.ListAdapter;
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     JSONArray jsonArray;
     JSONObject ttemp;
     String current_day,select_day;
+    TextView select;
+    View.OnClickListener mOnClickListner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
         d_day = (ListView)findViewById(R.id.d_day_list);
         calender = (CalendarView)findViewById(R.id.Calendar);
         favorite = (CheckBox)findViewById(R.id.event_favorite);
+        select = (TextView)findViewById(R.id.select_day);
         connection = new JSONTask();
+        select.setText(select_day);// 입력 날짜 출력
 
         if(dbHelper.select().equals("")){
             Toast.makeText(getApplicationContext(),"디비가 비었습니다.",Toast.LENGTH_SHORT).show();
@@ -117,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
         select_list();
 
 
+
+
         d_day.setAdapter(adapter);
 
         calender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -127,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
                 else
                     select_day = year + "." + "0" + (month+1) + "." + dayOfMonth;
 
-                adapter = new ListAdapter();
+                select.setText(select_day);
+
+                adapter = new ListAdapter(mOnClickListner);
                 for(int i=0;i<eventList.size();i++){
                     int temp ,check;
                     temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(select_day.substring(8))));
@@ -138,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                             {}
                             else{
                                 selectList.add(eventList.get(i));
-                                adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp));
+                                adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp),eventList.get(i).isFavorite());
                             }
 
                         }
@@ -150,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                                 int sftemp = 28 - ftemp;
                                 if((temp + ftemp)+sftemp < 10){
                                     selectList.add(eventList.get(i));
-                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                                 }
                             }
                             else{
@@ -158,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                                 int sftemp = 30 - ftemp;
                                 if((temp + ftemp)+sftemp < 10){
                                     selectList.add(eventList.get(i));
-                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                                 }
                             }
                         }
@@ -167,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                             int sftemp = 31 - ftemp;
                             if((temp + ftemp)+sftemp < 10){
                                 selectList.add(eventList.get(i));
-                                adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                                adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                             }
                         }
                     }
@@ -188,8 +198,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cate = parent.getItemAtPosition(position).toString();
                 if(cate.equals("전체")){
-                    adapter = new ListAdapter();
+                    adapter = new ListAdapter(mOnClickListner);
                     for(int i=0;i<eventList.size();i++){
+                        Log.i("확인",String.valueOf(eventList.get(i).isFavorite()));
                         int temp ,check;
                         temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(select_day.substring(8))));
                         check = Integer.parseInt(select_day.substring(5,7));
@@ -198,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                                 if(temp < 0)
                                 {}
                                 else{
-                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp));
+                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp),eventList.get(i).isFavorite());
                                 }
 
                             }
@@ -209,14 +220,14 @@ public class MainActivity extends AppCompatActivity {
                                     int ftemp = Integer.parseInt(select_day.substring(8));
                                     int sftemp = 28 - ftemp;
                                     if((temp + ftemp)+sftemp < 10){
-                                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                                     }
                                 }
                                 else{
                                     int ftemp = Integer.parseInt(select_day.substring(8));
                                     int sftemp = 30 - ftemp;
                                     if((temp + ftemp)+sftemp < 10){
-                                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                                     }
                                 }
                             }
@@ -224,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                                 int ftemp = Integer.parseInt(select_day.substring(8));
                                 int sftemp = 31 - ftemp;
                                 if((temp + ftemp)+sftemp < 10){
-                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp),eventList.get(i).isFavorite());
                                 }
                             }
                         }
@@ -233,8 +244,9 @@ public class MainActivity extends AppCompatActivity {
                     d_day.setAdapter(adapter);
                 }
                 else{
-                    adapter = new ListAdapter();
+                    adapter = new ListAdapter(mOnClickListner);
                     for(int i=0;i<eventList.size();i++) {
+                        Log.i("확인",String.valueOf(eventList.get(i).isFavorite()));
                         if (eventList.get(i).getEvent_genre().equals(cate)) {
                             int temp, check;
                             temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19)) - (Integer.parseInt(select_day.substring(8))));
@@ -243,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (temp < 10) {
                                     if (temp < 0) {
                                     } else {
-                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp));
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp),eventList.get(i).isFavorite());
                                     }
 
                                 }
@@ -253,20 +265,20 @@ public class MainActivity extends AppCompatActivity {
                                         int ftemp = Integer.parseInt(select_day.substring(8));
                                         int sftemp = 28 - ftemp;
                                         if ((temp + ftemp) + sftemp < 10) {
-                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp));
+                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp),eventList.get(i).isFavorite());
                                         }
                                     } else {
                                         int ftemp = Integer.parseInt(select_day.substring(8));
                                         int sftemp = 30 - ftemp;
                                         if ((temp + ftemp) + sftemp < 10) {
-                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp));
+                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp),eventList.get(i).isFavorite());
                                         }
                                     }
                                 } else {
                                     int ftemp = Integer.parseInt(select_day.substring(8));
                                     int sftemp = 31 - ftemp;
                                     if ((temp + ftemp) + sftemp < 10) {
-                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp));
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp),eventList.get(i).isFavorite());
                                     }
                                 }
                             }
@@ -290,16 +302,51 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _intent = new Intent(getApplicationContext(),EventActivity.class);
                 EventInformation temp = new EventInformation();
+                String name;
+                name = adapter.getItem(position);
                 for(int i=0;i<eventList.size();i++){
-
-
+                    if(name.equals(eventList.get(i).getEvent_name())){
+                        temp = eventList.get(i);
+                    }
                 }
-
-                _intent.putExtra("event",eventList.get(position));
+                _intent.putExtra("event",temp);
                 startActivity(_intent);
             }
         });
 
+        mOnClickListner = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.event_favorite:
+                        String name = (String)v.getTag();
+                        Log.i("name",name);
+                        for(int i=0;i<eventList.size();i++) {
+                            if(eventList.get(i).getEvent_name().equals(name)){
+                                if(eventList.get(i).isFavorite()){
+                                    eventList.get(i).setFavorite(false);
+                                }
+                                else{
+                                    eventList.get(i).setFavorite(true);
+                                }
+                            }
+                            Log.i(eventList.get(i).getEvent_name(),String.valueOf(eventList.get(i).isFavorite()));
+
+                        }
+                        for(int j=0;j<My.getMyevent().size();j++){
+                            if(My.getMyevent().get(j).getEvent_name().equals(name)){
+                                if(My.getMyevent().get(j).isFavorite()){
+                                    My.getMyevent().get(j).setFavorite(false);
+                                }
+                                else{
+                                    My.getMyevent().get(j).setFavorite(true);
+                                }
+                            }
+                        }
+                }
+
+            }
+        };
        /* favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

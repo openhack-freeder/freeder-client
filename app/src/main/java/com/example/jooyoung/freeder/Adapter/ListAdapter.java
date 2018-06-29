@@ -17,15 +17,22 @@ import com.example.jooyoung.freeder.R;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends BaseAdapter implements View.OnClickListener{
+public class ListAdapter extends BaseAdapter implements View.OnClickListener {
     ArrayList<ListItem> listitem = new ArrayList<ListItem>();
+    private View.OnClickListener mOnClickListner = null;
 
-    public interface ListBtnClickListner{
+    public interface ListBtnClickListner {
         void onListBtnClick(int position);
     }
-    public ListAdapter(){
+
+    public ListAdapter() {
 
     }
+
+    public ListAdapter(View.OnClickListener onClickListener) {
+        mOnClickListner = onClickListener;
+    }
+
     @Override
     public int getCount() {
         return listitem.size();
@@ -44,16 +51,15 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Context context = parent.getContext();
-        if(convertView==null){
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.d_dayitem,parent,false);
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.d_dayitem, parent, false);
         }
 
-        ProgressBar d_day_status = (ProgressBar)convertView.findViewById(R.id.d_day_progress);
-        TextView eventname = (TextView)convertView.findViewById(R.id.event_name);
-        TextView event_day = (TextView)convertView.findViewById(R.id.event_d_day);
-        CheckBox event_favorite = (CheckBox)convertView.findViewById(R.id.event_favorite);
-
+        ProgressBar d_day_status = (ProgressBar) convertView.findViewById(R.id.d_day_progress);
+        TextView eventname = (TextView) convertView.findViewById(R.id.event_name);
+        TextView event_day = (TextView) convertView.findViewById(R.id.event_d_day);
+        CheckBox event_favorite = (CheckBox) convertView.findViewById(R.id.event_favorite);
 
 
         ListItem listItem = listitem.get(position);
@@ -61,18 +67,22 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener{
         eventname.setText(listItem.getTitle());
         event_day.setText("D-" + listItem.getDday());
         d_day_status.setProgress(Integer.parseInt(listItem.getDday()));
-        event_favorite.setTag(position);
+        event_favorite.setChecked(listItem.isFavorite_check());
 
-
+        if (mOnClickListner != null) {
+            event_favorite.setTag(listItem.getTitle());
+            event_favorite.setOnClickListener(mOnClickListner);
+        }
 
 
         return convertView;
     }
 
-    public void addItem(String name,String dday){
+    public void addItem(String name, String dday,boolean favorite) {
         ListItem item = new ListItem();
         item.setTitle(name);
         item.setDday(dday);
+        item.setFavorite_check(favorite);
 
         listitem.add(item);
     }
