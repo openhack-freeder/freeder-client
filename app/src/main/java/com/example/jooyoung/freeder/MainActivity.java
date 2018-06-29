@@ -1,8 +1,6 @@
 package com.example.jooyoung.freeder;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,11 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.example.jooyoung.freeder.Adapter.ListAdapter;
@@ -165,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
-        inf.inflate(R.menu.main_overflow, menu);
+        inf.inflate(R.menu.main_overflow2, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -173,14 +169,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.overflow1:
+            case R.id.overflow03:
                 _intent = new Intent(getApplicationContext(),Mypage.class);
 
                 _intent.putExtra("User",My);
                 startActivity(_intent);
 
                 return true;
-            case R.id.overflow2:
+            case R.id.overflow04:
+                _intent = new Intent(getApplicationContext(),EventListActivity.class);
+
+                startActivity(_intent);
                 return true;
         }
         return false;
