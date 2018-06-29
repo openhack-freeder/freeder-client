@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class ListAdapter extends BaseAdapter{
         TextView eventname = (TextView)convertView.findViewById(R.id.event_name);
         TextView event_day = (TextView)convertView.findViewById(R.id.event_d_day);
 
+
         ListItem listItem = listitem.get(position);
 
         eventname.setText(listItem.getTitle());
@@ -65,6 +67,5 @@ public class ListAdapter extends BaseAdapter{
         item.setDday(dday);
 
         listitem.add(item);
-
     }
 }

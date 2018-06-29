@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 public class ListItem {
     private String Title;
     private String dday;
+    private boolean favorite_check;
 
 
     public String getTitle() {
@@ -15,6 +16,10 @@ public class ListItem {
         return dday;
     }
 
+    public boolean isFavorite_check() {
+        return favorite_check;
+    }
+
     public void setDday(String dday) {
         this.dday = dday;
     }
@@ -23,4 +28,7 @@ public class ListItem {
         Title = title;
     }
 
+    public void setFavorite_check(boolean favorite_check) {
+        this.favorite_check = favorite_check;
+    }
 }

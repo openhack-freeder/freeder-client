@@ -4,11 +4,16 @@ import java.io.Serializable;
 
 public class EventInformation implements Serializable {
     private String event_name;
-    private String event_time; // 응모기간
-    private String event_day; // 날짜
+    private String event_time; // 날짜
+    private String event_day; // 응모기간
     private String event_location;
     private String URL;
     private String event_genre;
+    private boolean favorite;
+
+    public EventInformation(){
+        favorite = false;
+    }
 
     public EventInformation(String event_name,String event_time,String event_day,String event_location,String URL){
         this.event_name = event_name;
@@ -16,6 +21,7 @@ public class EventInformation implements Serializable {
         this.event_location = event_location;
         this.event_time = event_time;
         this.URL = URL;
+        favorite = false;
 
     }
 
@@ -43,6 +49,10 @@ public class EventInformation implements Serializable {
         return event_genre;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
     public void setEvent_day(String event_day) {
         this.event_day = event_day;
     }
@@ -65,5 +75,9 @@ public class EventInformation implements Serializable {
 
     public void setEvent_genre(String event_genre) {
         this.event_genre = event_genre;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

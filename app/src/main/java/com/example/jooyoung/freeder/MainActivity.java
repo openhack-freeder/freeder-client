@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,14 +14,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.example.jooyoung.freeder.Adapter.ListAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,49 +34,99 @@ public class MainActivity extends AppCompatActivity {
     ListView d_day;
     CalendarView calender;
     ListAdapter adapter;
-    String event_name,cate;
+    String event_name,cate,receivemsg;
+    Date mDate;
+    long mNow;
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.mm.dd");
     User My;
     ArrayList<EventInformation> eventList = new ArrayList<>();
     Spinner category;
+    CheckBox favorite;
+    JSONTask connection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        List<String> spinner_item = new ArrayList<>();
-        ArrayAdapter<String> spinner_adapter = new ArrayAdapter<>(this,R.layout.spinner_item,spinner_item);
+        category = (Spinner)findViewById(R.id.categorylist);
+        List<String> _spinner_item = new ArrayList<>();
+        String[] temp = {"전체","영화,시사회","축제,행사(방청,콘서트,음악회","무용,발레","뮤지컬,연극","기타행사"};
+        _spinner_item.addAll(Arrays.asList(temp));
+        ArrayAdapter spinner_adapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,_spinner_item);
 
-        String[] temp = {"전체","영화시사회","행사 축제","콘서트,음악회","무용 발레","음악회","뮤지컬","연극,아동극","기타행사"};
-        for(int i=0;i<temp.length;i++){
-            spinner_item.add(temp[i]);
-        }
-        spinner_adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         category.setAdapter(spinner_adapter);
 
         d_day = (ListView)findViewById(R.id.d_day_list);
         calender = (CalendarView)findViewById(R.id.Calendar);
-        category = (Spinner)findViewById(R.id.categorylist);
-        adapter = new ListAdapter();
+        favorite = (CheckBox)findViewById(R.id.event_favorite);
+        connection = new JSONTask();
+       // d_day.setVisibility(View.INVISIBLE);
         My = new User(new EventInformation("asdf","asdf","asdf","asdf","asdf"));
         // 데이터에 저장된 내 정보 ... 에 있는 객체 (반복 돌릴꺼)
 
-        d_day.setAdapter(adapter);
+        try {
+            receivemsg = connection.execute("check").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
+        Log.i("asd",receivemsg);
+
+        /*adapter = new ListAdapter();
+        d_day.setAdapter(adapter);
         adapter.addItem("asdf","3");
-        adapter.addItem("Asf","5");
+        adapter.addItem("Asf","5");*/
         // 이 부분은 반복문으로 데이터 받아올때 넣자
+
+
 
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cate = parent.getItemAtPosition(position).toString();
                 if(cate.equals("전체")){
-
+                    adapter = new ListAdapter();
                     for(int i=0;i<eventList.size();i++){
-                        adapter.addItem(eventList.get(i).getEvent_name(),eventList.get(i).getEvent_day());
+                        int temp ;
+                        String current_day;
+                        current_day = getDate();
+                        temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(current_day.substring(19))));
+                        if(eventList.get(i).getEvent_day().substring(16,18).equals(current_day.substring(16,18))){
+                            if(temp<10){
+                                if(temp < 0)
+                                {}
+                                else{
+
+                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp));
+                                }
+
+                            }
+                        }
                     }
+                    d_day.setAdapter(adapter);
                 }
                 else{
+                    adapter = new ListAdapter();
+                    for(int i=0;i<eventList.size();i++){
+                        if(cate.equals(eventList.get(i).getEvent_genre())){
+                            int temp ;
+                            String current_day;
+                            current_day = getDate();
+                            temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(current_day.substring(19))));
+                            if(eventList.get(i).getEvent_day().substring(16,18).equals(current_day.substring(16,18))){
+                                if(temp<10){
+                                    if(temp < 0)
+                                    {}
+                                    else{
+                                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp));
+                                    }
 
+                                }
+                            }
+                        }
+                    }
+                    d_day.setAdapter(adapter);
                 }
 
             }
@@ -86,12 +142,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _intent = new Intent(getApplicationContext(),EventActivity.class);
+                EventInformation temp = new EventInformation();
+                for(int i=0;i<eventList.size();i++){
 
+                }
 
                 _intent.putExtra("event",eventList.get(position));
                 startActivity(_intent);
             }
         });
+
+        /*favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
 
     }
 
@@ -118,6 +184,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return false;
+    }
+    private String getDate(){
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
     }
 }
 

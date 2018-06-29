@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="49dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
@@ -15,32 +15,43 @@
         <ProgressBar
             android:id="@+id/d_day_progress"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="260dp"
-            android:layout_height="34dp"
+            android:layout_width="215dp"
+            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="23dp"
+            android:layout_marginEnd="68dp"
             android:max="10"
-            android:progressDrawable="@drawable/custom_progress"/>
+            android:progressDrawable="@drawable/custom_progress" />
 
         <TextView
             android:id="@+id/event_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
             android:layout_marginStart="18dp"
-            android:text="TextView"
-            android:fontFamily="@font/arial"/>
+            android:fontFamily="@font/arial"
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/event_d_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="120dp"
+            android:layout_alignStart="@+id/event_name"
             android:text="TextView" />
+
+        <CheckBox
+            android:id="@+id/event_favorite"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="10dp"
+            android:checked="false"
+            android:button="@null"
+            android:drawableLeft="@drawable/checkselector"
+            android:focusable="false"/>
 
     </RelativeLayout>
 

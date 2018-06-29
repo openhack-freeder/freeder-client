@@ -20,7 +20,6 @@
         <activity android:name=".CalenderActivity"></activity>
         <activity android:name=".EventActivity"></activity>
         <activity android:name=".Mypage"></activity>
-        <activity android:name=".ReviewActivity"></activity>
     </application>
 
 </manifest>
