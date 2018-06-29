@@ -15,14 +15,14 @@ public class EventInformation implements Serializable {
         favorite = false;
     }
 
-    public EventInformation(String event_name,String event_time,String event_day,String event_location,String URL){
+    public EventInformation(String event_name,String event_day,String event_time,String event_location,String URL,String category){
         this.event_name = event_name;
         this.event_day = event_day;
         this.event_location = event_location;
         this.event_time = event_time;
         this.URL = URL;
-        favorite = false;
-
+        this.event_genre = category;
+        favorite = true;
     }
 
     public String getEvent_day() {

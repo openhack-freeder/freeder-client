@@ -17,8 +17,12 @@ import com.example.jooyoung.freeder.R;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends BaseAdapter{
+public class ListAdapter extends BaseAdapter implements View.OnClickListener{
     ArrayList<ListItem> listitem = new ArrayList<ListItem>();
+
+    public interface ListBtnClickListner{
+        void onListBtnClick(int position);
+    }
     public ListAdapter(){
 
     }
@@ -28,8 +32,8 @@ public class ListAdapter extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position) {
-        return listitem.get(position);
+    public String getItem(int position) {
+        return listitem.get(position).getTitle();
     }
 
     @Override
@@ -48,13 +52,17 @@ public class ListAdapter extends BaseAdapter{
         ProgressBar d_day_status = (ProgressBar)convertView.findViewById(R.id.d_day_progress);
         TextView eventname = (TextView)convertView.findViewById(R.id.event_name);
         TextView event_day = (TextView)convertView.findViewById(R.id.event_d_day);
+        CheckBox event_favorite = (CheckBox)convertView.findViewById(R.id.event_favorite);
+
 
 
         ListItem listItem = listitem.get(position);
 
         eventname.setText(listItem.getTitle());
-        event_day.setText(listItem.getDday());
+        event_day.setText("D-" + listItem.getDday());
         d_day_status.setProgress(Integer.parseInt(listItem.getDday()));
+        event_favorite.setTag(position);
+
 
 
 
@@ -67,5 +75,10 @@ public class ListAdapter extends BaseAdapter{
         item.setDday(dday);
 
         listitem.add(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

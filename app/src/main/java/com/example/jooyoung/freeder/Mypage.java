@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ public class Mypage extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage);
+
         _intent = getIntent();
 
         My = (User) _intent.getSerializableExtra("User");
@@ -32,8 +35,15 @@ public class Mypage extends AppCompatActivity {
         my_events = (ListView)findViewById(R.id.my_list);
         adapter = new ListAdapter_my();
         my_events.setAdapter(adapter);
-        adapter.addItem("day", "location", "name", "time", "URL");
-        adapter.addItem("abc", "def", "ghi", "jkl", "mno");
-        adapter.addItem("2015/04/17", "나무위키", "나무위키 설립 기념행사", "13:00", "https://namu.wiki/");
+        for(int i=0;i<My.getMyevent().size();i++){
+            adapter.addItem(My.getMyevent().get(i));
+        }
+
+        my_events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 }

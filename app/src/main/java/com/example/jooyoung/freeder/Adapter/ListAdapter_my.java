@@ -80,9 +80,7 @@ public class ListAdapter_my extends BaseAdapter {
         return convertView;
     }
 
-    public void addItem(String day, String location, String name, String time, String URL ){
-        EventInformation evinfo = new EventInformation(name, time, day, location, URL);
-        info.add(evinfo);
-
+    public void addItem(EventInformation user_event ){
+        info.add(user_event);
     }
 }

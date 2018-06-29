@@ -10,6 +10,7 @@ public class ListItem {
     public ListItem(String title,String dday){
         Title = title;
         this.dday = dday;
+        favorite_check = false;
     }
     public ListItem(){
 

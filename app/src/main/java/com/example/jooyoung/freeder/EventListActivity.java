@@ -23,28 +23,58 @@ public class EventListActivity extends AppCompatActivity {
     ListAdapter adapter;
     Date mDate;
     long mNow;
-    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.mm.dd");
-    ArrayList<EventInformation> eventList = new ArrayList<>();
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.MM.dd");
+    ArrayList<EventInformation> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventlist);
         _intent = getIntent();
+        eventList = (ArrayList<EventInformation>)_intent.getSerializableExtra("Event");
+
 
         adapter = new ListAdapter();
         events = (ListView)findViewById(R.id.event_list);
 
         for(int i=0;i<eventList.size();i++){
-            int temp;
+            int temp ,check;
             String current_day;
             current_day = getDate();
-            temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(current_day.substring(19))));
-            if(eventList.get(i).getEvent_day().substring(16,18).equals(current_day.substring(16,18))) {
-                if (temp < 10) {
-                    if (temp < 0) {
-                    } else {
-                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp));
+            temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(current_day.substring(8))));
+            check = Integer.parseInt(current_day.substring(5,7));
+            if(eventList.get(i).getEvent_day().substring(16,18).equals(current_day.substring(5,7))){
+                if(temp<10){
+                    if(temp < 0)
+                    {}
+                    else{
+                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp));
+                    }
+
+                }
+            }
+            else if(eventList.get(i).getEvent_day().substring(16,18).equals("0" + String.valueOf(check+1))){
+                if(check % 2 == 0){
+                    if(check == 2){
+                        int ftemp = Integer.parseInt(current_day.substring(8));
+                        int sftemp = 28 - ftemp;
+                        if((temp + ftemp)+sftemp < 10){
+                            adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                        }
+                    }
+                    else{
+                        int ftemp = Integer.parseInt(current_day.substring(8));
+                        int sftemp = 30 - ftemp;
+                        if((temp + ftemp)+sftemp < 10){
+                            adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                        }
+                    }
+                }
+                else{
+                    int ftemp = Integer.parseInt(current_day.substring(8));
+                    int sftemp = 31 - ftemp;
+                    if((temp + ftemp)+sftemp < 10){
+                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
                     }
                 }
             }
