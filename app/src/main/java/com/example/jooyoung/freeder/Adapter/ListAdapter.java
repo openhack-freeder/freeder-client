@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class ListAdapter extends BaseAdapter implements View.OnClickListener {
     ArrayList<ListItem> listitem = new ArrayList<ListItem>();
     private View.OnClickListener mOnClickListner = null;
+    private String category;
 
     public interface ListBtnClickListner {
         void onListBtnClick(int position);
@@ -60,6 +62,7 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
         TextView eventname = (TextView) convertView.findViewById(R.id.event_name);
         TextView event_day = (TextView) convertView.findViewById(R.id.event_d_day);
         CheckBox event_favorite = (CheckBox) convertView.findViewById(R.id.event_favorite);
+        ImageView color = (ImageView)convertView.findViewById(R.id.color);
 
 
         ListItem listItem = listitem.get(position);
@@ -68,6 +71,22 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
         event_day.setText("D-" + listItem.getDday());
         d_day_status.setProgress(Integer.parseInt(listItem.getDday()));
         event_favorite.setChecked(listItem.isFavorite_check());
+        if(category.equals("전체")){
+            color.setImageResource(R.drawable.all_color);
+        }
+        else if(category.equals("영화")){
+            color.setImageResource(R.drawable.movie_color);
+        }
+        else if(category.equals("축제,행사")){
+            color.setImageResource(R.drawable.festival_color);
+        }
+        else if(category.equals("연극,뮤지컬")){
+            color.setImageResource(R.drawable.musical_color);
+        }
+        else{
+            color.setImageResource(R.drawable.etc_color);
+        }
+
 
         if (mOnClickListner != null) {
             event_favorite.setTag(listItem.getTitle());
@@ -78,11 +97,13 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
         return convertView;
     }
 
-    public void addItem(String name, String dday,boolean favorite) {
+    public void addItem(String name, String dday,boolean favorite,String category) {
         ListItem item = new ListItem();
         item.setTitle(name);
         item.setDday(dday);
         item.setFavorite_check(favorite);
+        this.category = category;
+
 
         listitem.add(item);
     }

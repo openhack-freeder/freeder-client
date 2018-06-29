@@ -25,7 +25,6 @@ public class Mypage extends AppCompatActivity {
     User Mylist = new User();
     ListView my_events;
     ListAdapter_my adapter;
-    Button all_erase;
     DatabaseHelper dbHelper;
     String current_day;
     ArrayList<EventInformation> _eventlist;
@@ -44,7 +43,6 @@ public class Mypage extends AppCompatActivity {
 
         // 리스트뷰에 데이터 불러오기
         my_events = (ListView)findViewById(R.id.my_list);
-        all_erase = (Button)findViewById(R.id.all_erase);
         adapter = new ListAdapter_my();
         my_events.setAdapter(adapter);
 
@@ -57,7 +55,7 @@ public class Mypage extends AppCompatActivity {
             adapter.addItem(Mylist.getMyevent().get(i));
         }
 
-        all_erase.setOnClickListener(new View.OnClickListener() {
+        /*all_erase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for(int i=0;i<Mylist.getMyevent().size();i++){
@@ -79,8 +77,7 @@ public class Mypage extends AppCompatActivity {
 
 
             }
-        });
-
+        });*/
 
     }
     public boolean onCreateOptionsMenu(Menu menu) {

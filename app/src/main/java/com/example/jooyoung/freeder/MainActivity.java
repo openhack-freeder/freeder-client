@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         _spinner_item.addAll(Arrays.asList(temp));
         ArrayList<spinner_item> spin = new ArrayList<spinner_item>();
 
-        spin.add(new spinner_item(temp[0], R.drawable.all));
+        spin.add(new spinner_item(temp[0], R.drawable.all_2));
         spin.add(new spinner_item(temp[1], R.drawable.movie));
         spin.add(new spinner_item(temp[2], R.drawable.festival));
         spin.add(new spinner_item(temp[3], R.drawable.dance));
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                             if (temp < 0) {
                             } else {
                                 selectList.add(eventList.get(i));
-                                adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp), eventList.get(i).isFavorite());
+                                adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                             }
 
                         }
@@ -191,14 +191,14 @@ public class MainActivity extends AppCompatActivity {
                                 int sftemp = 28 - ftemp;
                                 if ((temp + ftemp) + sftemp < 10) {
                                     selectList.add(eventList.get(i));
-                                    adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                    adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                                 }
                             } else {
                                 int ftemp = Integer.parseInt(select_day.substring(8));
                                 int sftemp = 30 - ftemp;
                                 if ((temp + ftemp) + sftemp < 10) {
                                     selectList.add(eventList.get(i));
-                                    adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                    adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                                 }
                             }
                         } else {
@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                             int sftemp = 31 - ftemp;
                             if ((temp + ftemp) + sftemp < 10) {
                                 selectList.add(eventList.get(i));
-                                adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                             }
                         }
                     }
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                             if (temp < 10) {
                                 if (temp < 0) {
                                 } else {
-                                    adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp), eventList.get(i).isFavorite());
+                                    adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                                 }
 
                             }
@@ -244,20 +244,20 @@ public class MainActivity extends AppCompatActivity {
                                     int ftemp = Integer.parseInt(select_day.substring(8));
                                     int sftemp = 28 - ftemp;
                                     if ((temp + ftemp) + sftemp < 10) {
-                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                                     }
                                 } else {
                                     int ftemp = Integer.parseInt(select_day.substring(8));
                                     int sftemp = 30 - ftemp;
                                     if ((temp + ftemp) + sftemp < 10) {
-                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                                     }
                                 }
                             } else {
                                 int ftemp = Integer.parseInt(select_day.substring(8));
                                 int sftemp = 31 - ftemp;
                                 if ((temp + ftemp) + sftemp < 10) {
-                                    adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                    adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                                 }
                             }
                         }
@@ -275,28 +275,30 @@ public class MainActivity extends AppCompatActivity {
                                 if (temp < 10) {
                                     if (temp < 0) {
                                     } else {
-                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp), eventList.get(i).isFavorite());
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                                     }
 
                                 }
                             } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 1))) {
-                                if (check == 2) {
-                                    int ftemp = Integer.parseInt(select_day.substring(8));
-                                    int sftemp = 28 - ftemp;
-                                    if ((temp + ftemp) + sftemp < 10) {
-                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
-                                    }
-                                } else if(check == 4 || check == 6 || check == 9 || check == 11){
-                                    int ftemp = Integer.parseInt(select_day.substring(8));
-                                    int sftemp = 30 - ftemp;
-                                    if ((temp + ftemp) + sftemp < 10) {
-                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                if (check % 2 == 0) {
+                                    if (check == 2) {
+                                        int ftemp = Integer.parseInt(select_day.substring(8));
+                                        int sftemp = 28 - ftemp;
+                                        if ((temp + ftemp) + sftemp < 10) {
+                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
+                                        }
+                                    } else {
+                                        int ftemp = Integer.parseInt(select_day.substring(8));
+                                        int sftemp = 30 - ftemp;
+                                        if ((temp + ftemp) + sftemp < 10) {
+                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
+                                        }
                                     }
                                 } else {
                                     int ftemp = Integer.parseInt(select_day.substring(8));
                                     int sftemp = 31 - ftemp;
                                     if ((temp + ftemp) + sftemp < 10) {
-                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite());
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp), eventList.get(i).isFavorite(),eventList.get(i).getEvent_genre());
                                     }
                                 }
                             }

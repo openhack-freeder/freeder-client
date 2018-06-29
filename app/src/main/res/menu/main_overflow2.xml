@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <item
+        android:icon="@drawable/logo"
+        android:title="A"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/white"
+        android:title="A"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/white"
+        android:title="A"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/white"
+        android:title="A"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/white"
+        android:title="A"
+        app:showAsAction="always" />
     <item
         android:id="@+id/overflow03"
-        android:icon="@drawable/baseline_person_24px"
+        android:icon="@drawable/only"
         android:title="A"
         app:showAsAction="always" />
 

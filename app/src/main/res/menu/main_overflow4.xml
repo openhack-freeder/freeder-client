@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
         android:icon="@drawable/logo"
         android:title="A"
@@ -23,14 +22,11 @@
         android:title="A"
         app:showAsAction="always" />
     <item
-        android:id="@+id/overflow02"
-        android:icon="@drawable/outline_calendar_today_24px"
+        android:icon="@drawable/white"
         android:title="A"
         app:showAsAction="always" />
     <item
-        android:id="@+id/overflow01"
-        android:icon="@drawable/only"
+        android:icon="@drawable/white"
         android:title="A"
         app:showAsAction="always" />
-
 </menu>
