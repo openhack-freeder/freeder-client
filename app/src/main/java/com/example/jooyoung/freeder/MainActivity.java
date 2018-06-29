@@ -17,6 +17,10 @@ import android.widget.Spinner;
 
 import com.example.jooyoung.freeder.Adapter.ListAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,12 +37,15 @@ public class MainActivity extends AppCompatActivity {
     String event_name,cate,receivemsg;
     Date mDate;
     long mNow;
-    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.mm.dd");
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.MM.dd");
     User My;
     ArrayList<EventInformation> eventList = new ArrayList<>();
     Spinner category;
     CheckBox favorite;
     JSONTask connection;
+    JSONObject jsonObject;
+    JSONArray jsonArray;
+    JSONObject ttemp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         calender = (CalendarView)findViewById(R.id.Calendar);
         favorite = (CheckBox)findViewById(R.id.event_favorite);
         connection = new JSONTask();
-       // d_day.setVisibility(View.INVISIBLE);
         My = new User(new EventInformation("asdf","asdf","asdf","asdf","asdf"));
         // 데이터에 저장된 내 정보 ... 에 있는 객체 (반복 돌릴꺼)
 
@@ -68,14 +74,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.i("asd",receivemsg);
+        try {
+            jsonArray= new JSONArray(receivemsg);
+            for(int i=0;i<jsonArray.length();i++){
+                ttemp = jsonArray.getJSONObject(i);
+                EventInformation _temp = new EventInformation();
+                String title = ttemp.getString("title");
+                String date = ttemp.getString("date");
+                String time = ttemp.getString("time");
+                String where = ttemp.getString("where");
+                String category = ttemp.getString("category");
+                String url = ttemp.getString("url");
+                _temp.setEvent_name(title);
+                _temp.setEvent_day(date);
+                _temp.setEvent_time(time);
+                _temp.setEvent_location(where);
+                _temp.setEvent_genre(category);
+                _temp.setURL(url);
+                eventList.add(_temp);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        /*adapter = new ListAdapter();
+
+
+
         d_day.setAdapter(adapter);
-        adapter.addItem("asdf","3");
-        adapter.addItem("Asf","5");*/
-        // 이 부분은 반복문으로 데이터 받아올때 넣자
-
-
 
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -84,45 +109,94 @@ public class MainActivity extends AppCompatActivity {
                 if(cate.equals("전체")){
                     adapter = new ListAdapter();
                     for(int i=0;i<eventList.size();i++){
-                        int temp ;
+                        int temp ,check;
                         String current_day;
                         current_day = getDate();
-                        temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(current_day.substring(19))));
-                        if(eventList.get(i).getEvent_day().substring(16,18).equals(current_day.substring(16,18))){
+                        temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(current_day.substring(8))));
+                        check = Integer.parseInt(current_day.substring(5,7));
+                        if(eventList.get(i).getEvent_day().substring(16,18).equals(current_day.substring(5,7))){
                             if(temp<10){
                                 if(temp < 0)
                                 {}
                                 else{
-
                                     adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp));
                                 }
 
                             }
                         }
-                    }
-                    d_day.setAdapter(adapter);
-                }
-                else{
-                    adapter = new ListAdapter();
-                    for(int i=0;i<eventList.size();i++){
-                        if(cate.equals(eventList.get(i).getEvent_genre())){
-                            int temp ;
-                            String current_day;
-                            current_day = getDate();
-                            temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19))-(Integer.parseInt(current_day.substring(19))));
-                            if(eventList.get(i).getEvent_day().substring(16,18).equals(current_day.substring(16,18))){
-                                if(temp<10){
-                                    if(temp < 0)
-                                    {}
-                                    else{
-                                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf(temp));
+                        else if(eventList.get(i).getEvent_day().substring(16,18).equals("0" + String.valueOf(check+1))){
+                            if(check % 2 == 0){
+                                if(check == 2){
+                                    int ftemp = Integer.parseInt(current_day.substring(8));
+                                    int sftemp = 28 - ftemp;
+                                    if((temp + ftemp)+sftemp < 10){
+                                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
                                     }
-
+                                }
+                                else{
+                                    int ftemp = Integer.parseInt(current_day.substring(8));
+                                    int sftemp = 30 - ftemp;
+                                    if((temp + ftemp)+sftemp < 10){
+                                        adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
+                                    }
+                                }
+                            }
+                            else{
+                                int ftemp = Integer.parseInt(current_day.substring(8));
+                                int sftemp = 31 - ftemp;
+                                if((temp + ftemp)+sftemp < 10){
+                                    adapter.addItem(eventList.get(i).getEvent_name(),String.valueOf((temp + ftemp)+sftemp));
                                 }
                             }
                         }
                     }
+                    d_day.setVisibility(View.VISIBLE);
                     d_day.setAdapter(adapter);
+                }
+                else{
+                    adapter = new ListAdapter();
+                    for(int i=0;i<eventList.size();i++) {
+                        if (eventList.get(i).getEvent_genre().equals(cate)) {
+                            int temp, check;
+                            String current_day;
+                            current_day = getDate();
+                            temp = (Integer.parseInt(eventList.get(i).getEvent_day().substring(19)) - (Integer.parseInt(current_day.substring(8))));
+                            check = Integer.parseInt(current_day.substring(5, 7));
+                            if (eventList.get(i).getEvent_day().substring(16, 18).equals(current_day.substring(5, 7))) {
+                                if (temp < 10) {
+                                    if (temp < 0) {
+                                    } else {
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf(temp));
+                                    }
+
+                                }
+                            } else if (eventList.get(i).getEvent_day().substring(16, 18).equals("0" + String.valueOf(check + 1))) {
+                                if (check % 2 == 0) {
+                                    if (check == 2) {
+                                        int ftemp = Integer.parseInt(current_day.substring(8));
+                                        int sftemp = 28 - ftemp;
+                                        if ((temp + ftemp) + sftemp < 10) {
+                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp));
+                                        }
+                                    } else {
+                                        int ftemp = Integer.parseInt(current_day.substring(8));
+                                        int sftemp = 30 - ftemp;
+                                        if ((temp + ftemp) + sftemp < 10) {
+                                            adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp));
+                                        }
+                                    }
+                                } else {
+                                    int ftemp = Integer.parseInt(current_day.substring(8));
+                                    int sftemp = 31 - ftemp;
+                                    if ((temp + ftemp) + sftemp < 10) {
+                                        adapter.addItem(eventList.get(i).getEvent_name(), String.valueOf((temp + ftemp) + sftemp));
+                                    }
+                                }
+                            }
+                        }
+                        d_day.setVisibility(View.VISIBLE);
+                        d_day.setAdapter(adapter);
+                    }
                 }
 
             }
@@ -148,12 +222,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*favorite.setOnClickListener(new View.OnClickListener() {
+        favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });*/
+        });
 
     }
 

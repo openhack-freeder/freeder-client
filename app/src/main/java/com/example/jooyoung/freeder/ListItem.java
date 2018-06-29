@@ -7,6 +7,13 @@ public class ListItem {
     private String dday;
     private boolean favorite_check;
 
+    public ListItem(String title,String dday){
+        Title = title;
+        this.dday = dday;
+    }
+    public ListItem(){
+
+    }
 
     public String getTitle() {
         return Title;
