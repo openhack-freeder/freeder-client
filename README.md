@@ -29,28 +29,28 @@
 > 달력, 이벤트 리스트들을 확인 할 수 있는 메인 페이지 입니다.
 
 <p align="center">
-  <img src="https://github.com/openhack-freeder/freeder-client/tree/master/img/main.png">
+  <img src="https://github.com/openhack-freeder/freeder-client/blob/master/img/main.png">
 </p>
 
 ### 상세페이지
 > 해당 이벤트의 상세 정보를 표시해주는 페이지 입니다.
 
 <p align="center">
-  <img src="https://github.com/openhack-freeder/freeder-client/tree/master/img/information.png">
+  <img src="https://github.com/openhack-freeder/freeder-client/blob/master/img/information.png">
 </p>
 
 ### 마이페이지
 > 찜한 이벤트들을 볼 수 있는 마이페이지 입니다.
 
 <p align="center">
-  <img src="https://github.com/esquake/esquake/blob/master/resources/mypag.png">
+  <img src="https://github.com/openhack-freeder/freeder-client/blob/master/img/mypag.png">
 </p>
 
 ### D-Day 페이지
 > 모든 디데이들을 표시해주는 페이지 입니다.
 
 <p align="center">
-  <img src="https://github.com/esquake/esquake/blob/master/resources/all-dday.png">
+  <img src="https://github.com/openhack-freeder/freeder-client/blob/master/img/all-dday.png">
 </p>
 
 ## License
